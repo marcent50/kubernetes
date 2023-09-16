@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: glpi-pv
+status:
+  phase: Bound
+spec:
+  capacity:
+    storage: 5Gi
+  local:
+    path: /data/glpi
+  accessModes:
+    - ReadWriteOnce
+
+
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  volumeMode: Filesystem
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - mjvm
